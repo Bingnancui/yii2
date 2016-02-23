@@ -36,10 +36,7 @@ class XmlResponseFormatter extends Component implements ResponseFormatterInterfa
      * @var string the XML encoding. If not set, it will use the value of [[Response::charset]].
      */
     public $encoding;
-    /**
-     * @var string the name of the root element.
-     */
-    public $rootTag = 'response';
+   
     /**
      * @var string the name of the elements that represent the array elements with numeric keys.
      */
@@ -65,9 +62,7 @@ class XmlResponseFormatter extends Component implements ResponseFormatterInterfa
         $response->getHeaders()->set('Content-Type', $this->contentType);
         if ($response->data !== null) {
             $dom = new DOMDocument($this->version, $charset);
-            $root = new DOMElement($this->rootTag);
-            $dom->appendChild($root);
-            $this->buildXml($root, $response->data);
+            $this->buildXml($dom, $response->data);
             $response->content = $dom->saveXML();
         }
     }
